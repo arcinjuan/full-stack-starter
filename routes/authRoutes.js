@@ -8,16 +8,19 @@ module.exports = (app) => {
 		})
 	);
 	app.get(
+		// this route is where google will redirect us to after successful login
+		// this url is set in the google dashboard
 		'/auth/google/callback',
-		passport.authenticate('google', {
-
-		})
+		passport.authenticate('google'),
+		(req, res) => {
+			res.redirect('/surveys');
+		}
 	);
 	app.get(
 		'/api/logout', 
 		(req, res) => {
 			req.logout();
-			res.send(req.user);
+			res.redirect('/');
 	});
 	app.get(
 		'/api/current_user', 
